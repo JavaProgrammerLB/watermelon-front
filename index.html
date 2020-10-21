@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="lib/vue/vue.js" type="text/javascript" charset="UTF-8"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Watermelon</title>
+</head>
+<body class="text-center">
+<div id="app">
+    <form class="form-signin">
+        <img src="res/svg/bootstrap-solid.svg" class="mb-4" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please Sign in</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="text" id="inputEmail" placeholder="Email address" class="form-control" required autofocus
+               v-model="email">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" placeholder="Password" class="form-control" required
+               v-model="password">
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" @click="submit" type="button">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">©2020</p>
+    </form>
+</div>
+<script type="text/javascript">
+			var app = new Vue({
+				el: '#app',
+				data: {
+					email : "liubei@qq.com",
+					password: "liubeiPassword",
+					flag:true,
+					loginResult: ""
+				},
+				methods: {
+                    submit: function(){
+                        console.log(this.email);
+				        console.log(this.password);
+                        axios.post("http://localhost:8080/login", {
+                            email: this.email,
+                            password: this.password
+                        }).then(function(response){
+                            console.log(response);
+                            this.flag = true;
+                            this.loginResult = response.data;
+                            console.log(loginResult.message);
+                            alert(loginResult.message);
+                            return false;
+                        });
+                    }
+				}
+			});
+</script>
+</body>
+</html>
